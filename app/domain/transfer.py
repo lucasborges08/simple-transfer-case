@@ -17,6 +17,9 @@ class Transfer:
         if not self.__has_valid_value():
             raise Exception('Cannot transfer negative values')
 
+        if not self.from_user.balance >= self.value:
+            raise Exception('User does not have enough balance')
+
     def __is_from_store_keeper(self):
         return self.from_user.is_storekeeper
 

@@ -8,7 +8,7 @@ class User:
     min_name_length = 3
     min_password_length = 6
 
-    def __init__(self, doc_number: str, email: str, name: str, password: str):
+    def __init__(self, doc_number: str, email: str, name: str, password: str, balance: float = 0.0):
         sanitized_doc_number = self.__sanitize_doc_number(doc_number)
         is_cnpj = len(sanitized_doc_number) > 11
         if is_cnpj:
@@ -33,6 +33,7 @@ class User:
         self.email = email
         self.name = name
         self.password = password
+        self.balance = balance
 
     def __sanitize_doc_number(self, doc_number):
         return re.sub('[-. /]', '', doc_number)

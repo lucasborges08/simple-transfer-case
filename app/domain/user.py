@@ -1,9 +1,10 @@
 from validate_docbr import CPF, CNPJ
 from email_validator import validate_email, EmailNotValidError
+from app.domain.base_entity import BaseEntity
 import re
 
 
-class User:
+class User(BaseEntity):
 
     min_name_length = 3
     min_password_length = 6

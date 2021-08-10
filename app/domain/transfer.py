@@ -1,7 +1,8 @@
 from app.domain.user import User
+from app.domain.base_entity import BaseEntity
 
 
-class Transfer:
+class Transfer(BaseEntity):
 
     min_transfer_value = 0.01
 

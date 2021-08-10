@@ -11,8 +11,9 @@ class User:
     def __init__(self, doc_number: str, email: str, name: str, password: str):
         sanitized_doc_number = self.__sanitize_doc_number(doc_number)
         is_cnpj = len(sanitized_doc_number) > 11
-        if is_cnpj and not CNPJ().validate(sanitized_doc_number):
-            raise Exception('Invalid CNPJ')
+        if is_cnpj:
+            if not CNPJ().validate(sanitized_doc_number):
+                raise Exception('Invalid CNPJ')
         elif not CPF().validate(sanitized_doc_number):
             raise Exception('Invalid CPF')
 

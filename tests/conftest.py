@@ -34,9 +34,15 @@ def valid_storekeeper_user(valid_cnpj, valid_name, valid_email, valid_password):
 
 @fixture(scope='function')
 def valid_common_user(valid_cpf, valid_name, valid_email, valid_password):
-    return User(name=valid_name, doc_number=valid_cpf, email=valid_email, password=valid_password)
+    return User(name=valid_name, doc_number=valid_cpf, email=valid_email, password=valid_password, balance=500)
 
 
 @fixture(scope='function')
 def valid_another_common_user(valid_cpf, valid_name, valid_email, valid_password):
     return User(name=valid_name, doc_number=valid_cpf, email=valid_email, password=valid_password)
+
+
+# @fixture(scope='function')
+# def clear_fake_db():
+#     from tests.database import DATABASE
+#     DATABASE = {}

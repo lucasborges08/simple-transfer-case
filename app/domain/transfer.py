@@ -6,10 +6,13 @@ class Transfer(BaseEntity):
 
     min_transfer_value = 0.01
 
-    def __init__(self, from_user: User, to_user: User, value: float):
+    def __init__(self, from_user: User, to_user: User, value: float, status: str = 'pending'):
+        super().__init__()
+
         self.from_user = from_user
         self.to_user = to_user
         self.value = value
+        self.status = status
 
     def validate(self):
         if self.__is_from_store_keeper():

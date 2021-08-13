@@ -9,4 +9,4 @@ class Authorizer:
         if response.status_code != 200:
             raise Exception('authorizer unavailable')
 
-        return response.json()
+        return response.json()['message'] == 'Autorizado'

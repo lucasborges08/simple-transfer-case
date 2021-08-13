@@ -1,13 +1,14 @@
 from app.domain.user import User
 from app.domain.base_entity import BaseEntity
+from uuid import UUID
 
 
 class Transfer(BaseEntity):
 
-    min_transfer_value = 0.01
+    __min_transfer_value = 0.01
 
-    def __init__(self, from_user: User, to_user: User, value: float, status: str = 'pending'):
-        super().__init__()
+    def __init__(self, from_user: User, to_user: User, value: float, status: str = 'pending', _id: UUID = None):
+        super().__init__(_id=_id)
 
         self.from_user = from_user
         self.to_user = to_user
@@ -28,4 +29,4 @@ class Transfer(BaseEntity):
         return self.from_user.is_storekeeper
 
     def __has_valid_value(self):
-        return self.value >= self.min_transfer_value
+        return self.value >= self.__min_transfer_value

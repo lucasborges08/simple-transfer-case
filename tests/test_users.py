@@ -37,6 +37,7 @@ def test_name_must_have_min_length(valid_email, valid_cpf, valid_password):
 def test_password_must_have_min_length(valid_email, valid_cpf, valid_name):
     invalid_min_length_password = '3456'
     with pytest.raises(Exception) as _exception:
-        User(doc_number=valid_cpf, email=valid_email, name=valid_name, password=invalid_min_length_password)
+        user = User(doc_number=valid_cpf, email=valid_email, name=valid_name, password=invalid_min_length_password)
+        user.validate()
 
     assert 'Invalid password min length' in str(_exception.value)

@@ -21,7 +21,7 @@ class TransferService:
         return self.transfer_data.cancel(transfer_id)
 
     def get_pending(self):
-        return self.transfer_data.get_by_status('pending')
+        return self.transfer_data.get_pending_raw()
 
     def complete(self, transfer_id: str):
         return self.transfer_data.complete(transfer_id)

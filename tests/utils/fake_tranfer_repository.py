@@ -33,7 +33,10 @@ class FakeTransferRepository:
 
     def find(self, transfer_id: str) -> Transfer:
         DATABASE = get_db()
-        return next(filter(lambda t: t.id == transfer_id, DATABASE[self.db_name]['records']))
+        try:
+            return next(filter(lambda t: t.id == transfer_id, DATABASE[self.db_name]['records']))
+        except Exception as e:
+            return None
 
     def cancel(self, transfer_id: str) -> bool:
         DATABASE = get_db()
@@ -88,3 +91,7 @@ class FakeTransferRepository:
     def get_pending(self) -> list:
         DATABASE = get_db()
         return list(filter(lambda t: t.status == 'pending', DATABASE[self.db_name]['records']))
+
+    # def get_pending_raw(self, limit=100) -> list:
+    #     DATABASE = get_db()
+    #     list(filter(lambda t: t.status == 'pending', DATABASE[self.db_name]['records']))

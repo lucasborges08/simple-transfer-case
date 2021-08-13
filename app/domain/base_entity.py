@@ -3,6 +3,5 @@ from uuid import uuid4
 
 class BaseEntity:
 
-    def __init__(self):
-        self.id = uuid4()
-
+    def __init__(self, _id=None):
+        self.id = _id or uuid4()

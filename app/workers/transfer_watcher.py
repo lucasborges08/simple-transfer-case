@@ -2,10 +2,6 @@ from app.services.transfer_service import TransferService
 from app.infrastructure.authorizer import Authorizer
 from app.infrastructure.notifier import Notifier
 from time import sleep
-# obtem transferencias pendentes
-# consulta serviço autorizador
-  # -> se autorizado, efetua a transação, atualiza o status(success) e notifica via email
-  # -> se não autorizado, atualiza o status(cancelado) e reembolsa o usuário que tentou realizar a transferencia
 
 
 class TransferWatcher:

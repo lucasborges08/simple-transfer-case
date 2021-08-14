@@ -31,7 +31,7 @@ def valid_password():
 
 @fixture(scope='function')
 def valid_storekeeper_user(valid_cnpj, valid_name, valid_email, valid_password):
-    return User(name=valid_name, doc_number=valid_cnpj, email=valid_email, password=valid_password)
+    return User(name=valid_name, doc_number=valid_cnpj, email='storekeeper@email.com', password=valid_password)
 
 
 @fixture(scope='function')

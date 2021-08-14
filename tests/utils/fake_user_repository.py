@@ -29,3 +29,14 @@ class FakeUserRepository:
     def find(self, user_id: str) -> User:
         DATABASE = get_db()
         return next(filter(lambda u: str(u.id) == user_id, DATABASE[self.db_name]['records']))
+
+    def get_by_credentials(self, email: str, password: str) -> User:
+        DATABASE = get_db()
+        user = None
+        for u in DATABASE[self.db_name]['records']:
+            if u.email == email and u.password == password:
+                return u
+
+        raise Exception('Invalid credentials')
+
+

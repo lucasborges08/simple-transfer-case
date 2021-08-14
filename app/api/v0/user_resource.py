@@ -3,6 +3,7 @@ from app.services.user_service import UserService
 from app.services.user_store_input import UserStoreInput
 from app.api.v0.contracts.store_user_contract import StoreUserContract
 from marshmallow.exceptions import ValidationError
+from app.domain.exceptions.validation_exception import ValidationException
 
 user_resource = Bottle()
 
@@ -17,6 +18,8 @@ def store_user():
         UserService().store(transfer_input)
         return HTTPResponse({'msg': 'Ok'}, status=200)
     except ValidationError as e:
-        return HTTPResponse({'msg': 'error', 'errors': e.messages}, status=422)
+        return HTTPResponse({'msg': e.messages}, status=422)
+    except ValidationException as e:
+        return HTTPResponse({'msg': str(e)}, status=422)
     except Exception as e:
-        return HTTPResponse({'msg': str(e)}, status=400)
+        return HTTPResponse({'msg': str(e)}, status=500)

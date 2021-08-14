@@ -1,6 +1,7 @@
 from app.domain.user import User
 from app.domain.base_entity import BaseEntity
 from uuid import UUID
+from app.domain.exceptions.validation_exception import ValidationException
 
 
 class Transfer(BaseEntity):
@@ -17,13 +18,13 @@ class Transfer(BaseEntity):
 
     def validate(self):
         if self.__is_from_store_keeper():
-            raise Exception('Storekeeper cannot make transfers')
+            raise ValidationException('Storekeeper cannot make transfers')
 
         if not self.__has_valid_value():
-            raise Exception('Cannot transfer negative values')
+            raise ValidationException('Cannot transfer negative values')
 
         if not self.from_user.balance >= self.value:
-            raise Exception('User does not have enough balance')
+            raise ValidationException('User does not have enough balance')
 
     def __is_from_store_keeper(self):
         return self.from_user.is_storekeeper

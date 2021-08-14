@@ -1,6 +1,7 @@
 from validate_docbr import CPF, CNPJ
 from email_validator import validate_email, EmailNotValidError
 from app.domain.base_entity import BaseEntity
+from app.domain.exceptions.validation_exception import ValidationException
 from uuid import UUID
 import re
 
@@ -16,17 +17,17 @@ class User(BaseEntity):
         is_cnpj = len(sanitized_doc_number) > 11
         if is_cnpj:
             if not CNPJ().validate(sanitized_doc_number):
-                raise Exception('Invalid CNPJ')
+                raise ValidationException('Invalid CNPJ')
         elif not CPF().validate(sanitized_doc_number):
-            raise Exception('Invalid CPF')
+            raise ValidationException('Invalid CPF')
 
         try:
             validate_email(email)
         except EmailNotValidError:
-            raise Exception('Invalid email')
+            raise ValidationException('Invalid email')
 
         if len(name) < self.min_name_length:
-            raise Exception('Invalid name min length')
+            raise ValidationException('Invalid name min length')
 
         self.doc_number = sanitized_doc_number
         self.is_storekeeper = is_cnpj
@@ -37,7 +38,7 @@ class User(BaseEntity):
 
     def validate(self):
         if len(self.password) < self.min_password_length:
-            raise Exception('Invalid password min length')
+            raise ValidationException('Invalid password min length')
 
     def __sanitize_doc_number(self, doc_number):
         return re.sub('[-. /]', '', doc_number)

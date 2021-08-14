@@ -23,9 +23,9 @@ class UserRepository:
                 return user.id
             except lookup('23505') as e:
                 if 'Key (email)' in e.pgerror:
-                    raise ValidationException('Email já existe na base de dados')
+                    raise ValidationException('Email already exists in database')
                 if 'Key (doc_number)' in e.pgerror:
-                    raise ValidationException('Documento já existe na base de dados')
+                    raise ValidationException('Document already exists in database')
 
     def find(self, user_id: str) -> User:
         with get_conn() as (conn, cursor):

@@ -1,5 +1,6 @@
 from app.domain.user import User
 from tests.database import get_db, update_db
+from app.domain.exceptions.validation_exception import ValidationException
 
 
 class FakeUserRepository:
@@ -14,9 +15,16 @@ class FakeUserRepository:
 
     def store(self, user: User) -> bool:
         DATABASE = get_db()
+
+        if list(filter(lambda u: str(u.email) == user.email, DATABASE[self.db_name]['records'])):
+            raise ValidationException('Email already exists in database')
+
+        if list(filter(lambda u: str(u.doc_number) == user.doc_number, DATABASE[self.db_name]['records'])):
+            raise ValidationException('Document already exists in database')
+
         DATABASE[self.db_name]['records'].append(user)
         update_db(DATABASE)
-        return True
+        return user.id
 
     def find(self, user_id: str) -> User:
         DATABASE = get_db()

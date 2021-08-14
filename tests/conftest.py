@@ -1,6 +1,8 @@
 from pytest import fixture
 from app.domain.user import User
 
+import webtest
+
 
 @fixture(scope='function')
 def valid_cpf():
@@ -38,11 +40,13 @@ def valid_common_user(valid_cpf, valid_name, valid_email, valid_password):
 
 
 @fixture(scope='function')
-def valid_another_common_user(valid_cpf, valid_name, valid_email, valid_password):
-    return User(name=valid_name, doc_number=valid_cpf, email=valid_email, password=valid_password)
+def valid_another_common_user(valid_name, valid_password):
+    return User(name=valid_name, doc_number='704.754.170-54', email='another@email.com', password=valid_password)
 
 
-# @fixture(scope='function')
-# def clear_fake_db():
-#     from tests.database import DATABASE
-#     DATABASE = {}
+@fixture(scope='function')
+def api_client():
+    from app.main import api
+    app = webtest.TestApp(api)
+    yield app
+

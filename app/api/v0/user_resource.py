@@ -13,10 +13,10 @@ def store_user():
     try:
         data = request.json
         StoreUserContract().load(data)
-        transfer_input = UserStoreInput(name=data['name'], email=data['email'], doc_number=data['doc_number'],
-                                        password=data['password'])
-        UserService().store(transfer_input)
-        return HTTPResponse({'msg': 'Ok'}, status=200)
+        transfer_input = UserStoreInput(name=data['name'], email=data['email'], doc_number=data['doc_number'], password=data['password'])
+        stored_user_id = UserService().store(transfer_input)
+
+        return HTTPResponse({'msg': {'id': str(stored_user_id)}}, status=200)
     except ValidationError as e:
         return HTTPResponse({'msg': e.messages}, status=422)
     except ValidationException as e:

@@ -8,10 +8,11 @@ services:
     ports:
       - "8088:8088"
     environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USERNAME: postgres
-      POSTGRES_HOST: db
-      POSTGRES_DATABASE: postgres
+      CONF_POSTGRES_PASSWORD: postgres
+      CONF_POSTGRES_USERNAME: postgres
+      CONF_POSTGRES_HOST: db
+      CONF_POSTGRES_DATABASE: postgres
+      CONF_APP_ENV: running
     depends_on:
       - db
     networks:
@@ -23,10 +24,13 @@ services:
       dockerfile: Dockerfile-worker
       context: .
     environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USERNAME: postgres
-      POSTGRES_HOST: db
-      POSTGRES_DATABASE: postgres
+      CONF_POSTGRES_PASSWORD: postgres
+      CONF_POSTGRES_USERNAME: postgres
+      CONF_POSTGRES_HOST: db
+      CONF_POSTGRES_DATABASE: postgres
+      CONF_APP_ENV: running
+      CONF_AUTHORIZER_URL: https://run.mocky.io/v3/8fafdd68-a090-496f-8c9a-3442cf30dae6
+      CONF_NOTIFIER_URL: http://o4d9z.mocklab.io/notify
     depends_on:
       - db
     networks:

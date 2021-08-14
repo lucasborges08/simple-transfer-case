@@ -6,6 +6,7 @@ import psycopg2
 from psycopg2 import pool
 from psycopg2.extras import DictCursor
 from contextlib import contextmanager
+from app.config import settings
 
 LOG = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -23,10 +24,10 @@ def get_pool():
     if DB_POOL is None:
         DB_POOL = pool.ThreadedConnectionPool(minconn=10,
                                               maxconn=15,
-                                              user=os.getenv('POSTGRES_USERNAME'),
-                                              password=os.getenv('POSTGRES_PASSWORD'),
-                                              database=os.getenv('POSTGRES_DATABASE'),
-                                              host=os.getenv('POSTGRES_HOST'))
+                                              user=settings.POSTGRES_USERNAME,
+                                              password=settings.POSTGRES_PASSWORD,
+                                              database=settings.POSTGRES_DATABASE,
+                                              host=settings.POSTGRES_HOST)
     return DB_POOL
 
 

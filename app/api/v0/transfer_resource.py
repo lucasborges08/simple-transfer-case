@@ -7,7 +7,7 @@ from marshmallow.exceptions import ValidationError
 transfer_resource = Bottle()
 
 
-@transfer_resource.route('/transfers', 'POST')
+@transfer_resource.route('/', 'POST')
 def store_transfer():
     try:
         data = request.json

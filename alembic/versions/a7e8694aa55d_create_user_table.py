@@ -29,7 +29,7 @@ def upgrade():
         sa.Column('balance', sa.Float(), nullable=False),
         sa.Column('is_storekeeper', sa.Boolean(), nullable=False),
         sa.Column('password', sa.String(500), nullable=False),
-        sa.Column('password_salt', sa.String(20), nullable=False),
+        sa.Column('password_salt', sa.String(35), nullable=False),
         sa.Column('created_at', sa.DateTime(timezone=True), nullable=False),
         sa.Column('updated_at', sa.DateTime(timezone=True), nullable=True)
     )

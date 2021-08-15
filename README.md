@@ -5,10 +5,10 @@
 
 ## Executar a solução
 ### 1. Subir aplicação, banco e worker
-docker-compose up
+`docker-compose up`
 
 ### 2. Rodar migrations
-docker exec -it lucas_case_app alembic upgrade head 
+`docker exec -it lucas_case_app alembic upgrade head` 
 
 
 ### Executar testes e análise estática: 
@@ -36,7 +36,7 @@ docker exec -it lucas_case_app alembic upgrade head
 }
 ```
 
-`POST http://localhost:8090/v0/authentication` - Autenticação
+`POST http://localhost:8088/v0/authentication` - Autenticação
 ```
 {
     "email": "testando@email.com",

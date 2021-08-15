@@ -1,6 +1,7 @@
 from bottle import Bottle, HTTPResponse, request
 from app.services.auth_service import AuthService
 from app.services.authenticate_input import AuthenticateInput
+from app.libs.auth_plugin import bypass_auth
 
 from app.api.v0.contracts.authenticate_contract import AuthenticateContract
 from marshmallow.exceptions import ValidationError
@@ -9,6 +10,7 @@ auth_resource = Bottle()
 
 
 @auth_resource.route('/', 'POST')
+@bypass_auth
 def authenticate():
     try:
         data = request.json

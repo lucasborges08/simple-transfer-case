@@ -9,7 +9,9 @@ class TransferService:
         self.transfer_data = get_repository('transfer')
         self.user_data = get_repository('user')
 
-    def store(self, transfer_input: TransferInput):
+    def store(self, transfer_input: TransferInput, requester_id):
+        if not requester_id == transfer_input.from_user:
+            raise Exception('Inconsistent User')
         from_user = self.user_data.find(transfer_input.from_user)
         to_user = self.user_data.find(transfer_input.to_user)
 

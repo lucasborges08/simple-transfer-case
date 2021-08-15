@@ -20,7 +20,7 @@ def test_user_can_register_a_transfer_to_another_user(valid_common_user, valid_a
     transfer = TransferService()
     transfer_data = FakeTransferRepository()
 
-    stored_transfer_id = transfer.store(transfer_input)
+    stored_transfer_id = transfer.store(transfer_input, str(valid_common_user.id))
     stored_transfer = transfer_data.find(stored_transfer_id)
 
     assert stored_transfer.from_user is not None
@@ -39,7 +39,7 @@ def test_canceled_transfer_must_refund_value(valid_common_user, valid_another_co
     transfer = TransferService()
     transfer_data = FakeTransferRepository()
 
-    stored_transfer_id = transfer.store(transfer_input)
+    stored_transfer_id = transfer.store(transfer_input, str(valid_common_user.id))
     transfer.cancel(str(stored_transfer_id))
     stored_transfer = transfer_data.find(stored_transfer_id)
 
@@ -60,7 +60,7 @@ def test_completed_transfer_must_append_value_to_user_balance(valid_common_user,
     transfer = TransferService()
     transfer_data = FakeTransferRepository()
 
-    stored_transfer_id = transfer.store(transfer_input)
+    stored_transfer_id = transfer.store(transfer_input, str(valid_common_user.id))
     transfer.complete(str(stored_transfer_id))
     stored_transfer = transfer_data.find(stored_transfer_id)
 
@@ -83,7 +83,7 @@ def test_not_authorized_transaction_must_be_canceled(authorizer_mock, valid_comm
     transfer = TransferService()
     transfer_data = FakeTransferRepository()
 
-    stored_transfer_id = transfer.store(transfer_input)
+    stored_transfer_id = transfer.store(transfer_input, str(valid_common_user.id))
     stored_transfer = transfer_data.find(stored_transfer_id)
     transfer_watcher.process_transfer(stored_transfer)
     canceled_transfer = transfer_data.find(stored_transfer_id)
@@ -110,7 +110,7 @@ def test_authorized_transaction_must_be_notified(notifier_mock, authorizer_mock,
     transfer = TransferService()
     transfer_data = FakeTransferRepository()
 
-    stored_transfer_id = transfer.store(transfer_input)
+    stored_transfer_id = transfer.store(transfer_input, str(valid_common_user.id))
     stored_transfer = transfer_data.find(stored_transfer_id)
     transfer_watcher.process_transfer(stored_transfer)
     canceled_transfer = transfer_data.find(stored_transfer_id)

@@ -37,38 +37,3 @@ def upgrade():
 
 def downgrade():
     op.drop_table('users')
-
-
-
-# INSERT INTO users values('82a66624-6582-4080-83d2-b4ca067e3a0f', 'nome aleatório', 'email@email.com.br', '84346762069', 500, false, 'asdfsfdohasofh', '24121313', now(), now());
-
-# INSERT INTO users values('2b975081-75a0-4247-b91d-97ec0460db68', 'outro nome aleatório', 'email2@email.com.br', '72336576023', 500, false, 'asdfsfdohasofh', '24121313', now(), now());
-
-# def data_upgrades():
-#     """Add any optional data upgrade migrations here!"""
-#
-#     my_table = table('users',
-#                      column('id', UUID),
-#                      column('name', sa.String),
-#                      column('email', sa.String),
-#                      column('doc_number', sa.String),
-#                      column('balance', sa.Float),
-#                      column('is_storekeeper', sa.Boolean),
-#                      column('password', sa.String),
-#                      column('password_salt', sa.String),
-#                      column('created_at', sa.DateTime),
-#                      column('updated_at', sa.DateTime)
-#                      )
-#
-#     op.bulk_insert(my_table,
-#         [
-#             {'id': UUID('82a66624-6582-4080-83d2-b4ca067e3a0f'), 'name': 'nome aleatório', 'email': 'email@email.com.br',
-#              'doc_number': '84346762069', 'balance': 500, 'is_storekeeper': False, 'password': 'asdfsfdohasofh',
-#              'password_salt': '24121313', 'created_at': datetime.now(), 'updated_at': datetime.now()},
-#
-#             {'id': UUID('2b975081-75a0-4247-b91d-97ec0460db68'), 'name': 'outro nome aleatório',
-#              'email': 'email2@email.com.br', 'doc_number': '84346762069', 'balance': 500, 'is_storekeeper': False,
-#              'password': 'asdfsfdohasofh', 'password_salt': '24121313', 'created_at': datetime.now(),
-#              'updated_at': datetime.now()}
-#         ]
-#     )

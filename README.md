@@ -17,7 +17,9 @@
 
 ### Endpoints
 
-`POST http://localhost:8088/v0/users` - Criação de usuários
+Collection do postman em `docs/simple-transfer-case.postman_collection.json`
+
+`POST http://localhost:8088/v0/users` - Criação de usuários (Obs: cada novo usuário recebe 20 reais para poder realizar as transferências)
 ```
 {
     "name": "nome teste",
@@ -43,3 +45,4 @@
     "password": "123456"
 }
 ```
+

@@ -4,7 +4,7 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from app.config import settings
+import os
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -24,7 +24,7 @@ target_metadata = None
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
-url = f'postgresql://{settings.POSTGRES_USERNAME}:{settings.POSTGRES_PASSWORD}@{settings.POSTGRES_HOST}/{settings.POSTGRES_DATABASE}'
+url = f'postgresql://{os.getenv("CONF_POSTGRES_USERNAME")}:{os.getenv("CONF_POSTGRES_PASSWORD")}@{os.getenv("CONF_POSTGRES_HOST")}/{os.getenv("CONF_POSTGRES_DATABASE")}'
 config.set_main_option("sqlalchemy.url", url)
 
 def run_migrations_offline():

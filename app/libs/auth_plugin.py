@@ -1,6 +1,7 @@
 from bottle import request, abort
 import inspect
 import jwt
+import logging
 
 
 class AuthPlugin:
@@ -25,8 +26,13 @@ class AuthPlugin:
             if not auth_header.startswith('Bearer'):
                 abort(401, 'No authorization header found')
 
-            token = auth_header.split(' ')[1]
-            decoded_token = jwt.decode(token, self.secret, algorithms=self.algorithm)
+            try:
+                token = auth_header.split(' ')[1]
+                decoded_token = jwt.decode(token, self.secret, algorithms=self.algorithm)
+            except Exception as e:
+                logging.error(str(e))
+                logging.info(auth_header)
+                abort(401, 'Expired token')
 
             if self.user_id_kw in callback_args:
                 kwargs[self.user_id_kw] = decoded_token['user']['id']

@@ -16,6 +16,7 @@ class TransferWatcher:
 
         self.transfer.complete(str(transfer.id))
         self.notifier.notify(transfer.to_user)
+        return True
 
     def run_poll(self):
         while True:

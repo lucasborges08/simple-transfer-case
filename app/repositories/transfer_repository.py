@@ -10,7 +10,7 @@ class TransferRepository:
         pass
 
     def store(self, transfer: Transfer):
-        with get_conn() as (conn, cursor):
+        with get_conn() as (_conn, cursor):
             cursor.execute('INSERT INTO transfers VALUES(%s,%s,%s,%s,%s,now(),now());',
                            (str(transfer.id), str(transfer.from_user.id), str(transfer.to_user.id),
                             transfer.value, transfer.status))
@@ -20,7 +20,7 @@ class TransferRepository:
         return transfer.id
 
     def find(self, transfer_id: str) -> Transfer:
-        with get_conn() as (conn, cursor):
+        with get_conn() as (_conn, cursor):
             cursor.execute('SELECT t.id, t.from_user_id, t.to_user_id, t.value, t.status,'
                            '   from_user.name as fu_name, from_user.email as fu_email,'
                            '   from_user.doc_number as fu_doc_number, from_user.balance as fu_balance,'
@@ -44,7 +44,7 @@ class TransferRepository:
                             value=_ret['value'])
 
     def cancel(self, transfer_id: str) -> bool:
-        with get_conn() as (conn, cursor):
+        with get_conn() as (_conn, cursor):
             cursor.execute("UPDATE transfers SET status = 'canceled', updated_at = now() "
                            "where id = %s RETURNING value, from_user_id",
                            (transfer_id,))
@@ -55,7 +55,7 @@ class TransferRepository:
         return True
 
     def complete(self, transfer_id: str) -> bool:
-        with get_conn() as (conn, cursor):
+        with get_conn() as (_conn, cursor):
             cursor.execute("UPDATE transfers SET status = 'success', updated_at = now() "
                            "where id = %s RETURNING value, to_user_id",
                            (transfer_id,))
@@ -65,8 +65,8 @@ class TransferRepository:
 
         return True
 
-    def get_pending_raw(self, limit=100) -> list:
-        with get_conn() as (conn, cursor):
+    def get_pending_raw(self, _limit=100) -> list:
+        with get_conn() as (_conn, cursor):
             cursor.execute("SELECT t.id, t.from_user_id, t.to_user_id, t.value, t.status,"
                            "   from_user.name as fu_name, from_user.email as fu_email,"
                            "   from_user.doc_number as fu_doc_number, from_user.balance as fu_balance,"

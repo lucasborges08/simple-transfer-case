@@ -11,7 +11,8 @@ class User(BaseEntity):
     min_name_length = 3
     min_password_length = 6
 
-    def __init__(self, doc_number: str, email: str, name: str, password: str = '', balance: float = 0.0, _id: UUID = None):
+    def __init__(self, doc_number: str, email: str, name: str, password: str = '',
+                 balance: float = 0.0, _id: UUID = None):
         super().__init__(_id=_id)
         sanitized_doc_number = self.__sanitize_doc_number(doc_number)
         is_cnpj = len(sanitized_doc_number) > 11

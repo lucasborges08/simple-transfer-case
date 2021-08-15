@@ -1,4 +1,3 @@
-import os
 from app.repositories.transfer_repository import TransferRepository
 from app.repositories.user_respository import UserRepository
 from tests.utils.fake_user_repository import FakeUserRepository

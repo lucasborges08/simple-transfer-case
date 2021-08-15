@@ -1,6 +1,5 @@
 import logging
 import sys
-import os
 
 import psycopg2
 from psycopg2 import pool

@@ -1,0 +1,9 @@
+strictness: medium
+
+ignore-paths:
+  - alembic
+  - tests
+
+pylint:
+  disable:
+    - too-many-arguments

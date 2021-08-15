@@ -20,4 +20,3 @@ class AuthService:
                            'exp': datetime.timestamp(exp)},
                           self.jwt_secret,
                           algorithm=self.jwt_algorithm)
-

@@ -9,10 +9,9 @@ from psycopg2.errors import lookup
 class UserRepository:
     def __init__(self):
         self.password_helper = PasswordHelper()
-        pass
 
     def store(self, user: User):
-        with get_conn() as (conn, cursor):
+        with get_conn() as (_conn, cursor):
             try:
                 hashed_pass, salt = self.password_helper.make_hash(user.password)
                 cursor.execute(
@@ -28,7 +27,7 @@ class UserRepository:
                     raise ValidationException('Document already exists in database')
 
     def find(self, user_id: str) -> User:
-        with get_conn() as (conn, cursor):
+        with get_conn() as (_conn, cursor):
             cursor.execute('SELECT id, name, email, doc_number, balance, is_storekeeper FROM users where id::text = %s limit 1', (user_id,))
             _return = cursor.fetchone()
             if not _return:
@@ -38,7 +37,7 @@ class UserRepository:
                         doc_number=_return['doc_number'], balance=_return['balance'])
 
     def get_by_credentials(self, email: str, password: str) -> User:
-        with get_conn() as (conn, cursor):
+        with get_conn() as (_conn, cursor):
             cursor.execute(
                 'SELECT id, name, email, doc_number, balance, is_storekeeper, password, password_salt FROM users where email = %s limit 1',
                 (email,))

@@ -45,20 +45,22 @@ class TransferRepository:
 
     def cancel(self, transfer_id: str) -> bool:
         with get_conn() as (conn, cursor):
-            cursor.execute("UPDATE transfers SET status = 'canceled' where id = %s RETURNING value, from_user_id",
+            cursor.execute("UPDATE transfers SET status = 'canceled', updated_at = now() "
+                           "where id = %s RETURNING value, from_user_id",
                            (transfer_id,))
             _ret = cursor.fetchone()
-            cursor.execute('UPDATE users set balance = balance + %s where id = %s',
+            cursor.execute('UPDATE users set balance = balance + %s, updated_at = now() where id = %s',
                            (_ret[0], _ret[1]))
 
         return True
 
     def complete(self, transfer_id: str) -> bool:
         with get_conn() as (conn, cursor):
-            cursor.execute("UPDATE transfers SET status = 'success' where id = %s RETURNING value, to_user_id",
+            cursor.execute("UPDATE transfers SET status = 'success', updated_at = now() "
+                           "where id = %s RETURNING value, to_user_id",
                            (transfer_id,))
             _ret = cursor.fetchone()
-            cursor.execute('UPDATE users set balance = balance + %s where id = %s',
+            cursor.execute('UPDATE users set balance = balance + %s, updated_at = now() where id = %s',
                            (_ret[0], _ret[1]))
 
         return True
